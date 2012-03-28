@@ -22,11 +22,12 @@ sub chk_dir {
 	}
 		
 }
-sub create_vh {
-	$user_name = unshift;
-	$vh_name = unshift;
 
-	open (VH, ">$apa_dir" . "$vh_name");
+sub create_vh {
+	$user_name = shift;
+	$vh_name = shift;
+
+	open (VH, ">", "$apa_dir" . "$vh_name" . ".conf");
 	print VH <<EOF;
 
 #
