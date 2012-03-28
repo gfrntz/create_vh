@@ -34,7 +34,7 @@ sub create_vh {
 #
 
 <VirtualHost *:80>
-    ServerAdmin some-mail-owner@zen.domain
+    ServerAdmin postmaster\@$vh_name
     DocumentRoot /var/www/$username/$vh_name
     DirectoryIndex index.php index.html index.htm
     ErrorLog /var/www/$user_name/apache-log/$vh_name.error.log
