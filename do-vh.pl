@@ -31,16 +31,3 @@ print "User name = $user_name ; vh name = $vh_name\n";
 
 create_vh($user_name,$vh_name);
 
-
-
-
-
-sub check_panel {
-	
-	if ( -d "/usr/local/ispmgr" ) {
-		print "I find isp panel!\n";		
-	} else {
-		print "Panel not found!\n";	
-	}
-	
-}
