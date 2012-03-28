@@ -15,11 +15,10 @@ if ( chomp($whoami = `whoami`) ne "root" ) {
 
 if (@ARGV > 2) {
 	print "To many args. Exit.\n";
-	exit;
-	
-} elsif (@ARGV == 0 || @ARGV == 1) {
-	print "I need two args.\n";
-	exit;
+	exit;	
+		} elsif (@ARGV == 0 || @ARGV == 1) {
+			print "I need two args.\n";
+			exit;
 }
 
 $user_name = $ARGV[0];
