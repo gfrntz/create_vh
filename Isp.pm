@@ -1,4 +1,4 @@
-package isp;
+package Isp;
 
 BEGIN {
 	use Exporter ();

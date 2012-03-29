@@ -3,8 +3,8 @@
 push(@INC,"./");
 
 use strict;
-use vh;   # only for apache/http
-#use isp; # for isp manager
+use Vh;   # only for apache/http
+#use Isp; # for isp manager
 
 my ($user_name, $file);
 

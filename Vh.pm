@@ -1,4 +1,4 @@
-package vh;
+package Vh;
 
 BEGIN {
 	use Exporter ();
