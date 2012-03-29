@@ -3,13 +3,13 @@ package Isp;
 BEGIN {
 	use Exporter ();
 	@ISA = "Exporter";
-	@EXPORT = qw(&create_isp_vh);
+	@EXPORT = qw(&check_panel &create_isp_vh);
 }
 
 sub check_panel {
 	
 	if ( -d "/usr/local/ispmgr" ) {
-		print "I find isp panel!\n";		
+		print "I found isp panel!\n";		
 	} else {
 		print "Panel not found!\n";	
 		exit;
@@ -17,8 +17,9 @@ sub check_panel {
 	
 	if ( ! -e "/usr/local/ispmgr/sbin/mgrctl" ) {
 		print "mgrctl not found. Exit.\n";
+		exit;
 	}
-	
+
 }
 
 sub create_isp_vh {
@@ -49,7 +50,7 @@ sub create_isp_vh {
 	owner=testapi  admin=$mail index="index.php index.html" cgi=on php=phpmod sok=yes`;
 	
 	}
-	
+		
 	close DOMAINS;
 }
 
