@@ -25,34 +25,14 @@ sub chk_dir {
 
 sub create_vh {
 	$user_name = shift;
-	$vh_name = shift;
+	$file = shift;
 
-	open (VH, ">", "$apa_dir" . "/$vh_name" . ".conf");
-	print VH <<EOF;
+	open (DOMAINS, "<", $file) or die "Can't open $file : $!\n";
 
-#
-# Created by zen do-vh.pl
-#
-
-<VirtualHost *:80>
-    ServerAdmin postmaster\@$vh_name
-    DocumentRoot /var/www/$user_name/$vh_name
-    DirectoryIndex index.php index.html index.htm
-    ErrorLog /var/www/$user_name/apache-log/$vh_name.error.log
-    CustomLog /var/www/$user_name/apache-log/$vh_name.access.log common
-    AddType application/x-httpd-php .php .php3 .php4 .php5 .phtml
-    AddType application/x-httpd-php-source .phps
-</VirtualHost>
-EOF
-
-	close(VH);
-	
-	if ( -d "/var/www/$user_name/$vh_name" ) {
-		print "Virtual host directory for $vh_name exists.\n";
-		print "Skip create directory.\n";
+	if ( -d "/var/www/$user_name" ) {
+		print "Directory for user $user_name exist. Skip.\n";
 	} else {
-		print "Create dir for $vh_name\n";
-		`mkdir /var/www/$user_name/$vh_name`;
+		`mkdir /var/www/$user_name`;
 	}
 
 	if ( -d "/var/www/$user_name/apache-log" ) {
@@ -61,12 +41,47 @@ EOF
 		print "Create apache log directory.\n";
 		`mkdir /var/www/$user_name/apache-log`;
 	}
+
+	while ( <DOMAINS> ) {
+	chomp($_);
+	print "Create vh for - $_\n";
+
+	if ( -d "/var/www/$user_name/$_" ) {
+		print "Virtual host directory for $_ exists.\n";
+		print "Skip create directory.\n";
+	} else {
+		print "Create dir for $_\n";
+		`mkdir /var/www/$user_name/$_`;
+	}
+
+		open (VH, ">", "$apa_dir" . "/$_" . ".conf") or die "Can't open $file : $!\n";;
+		print VH <<EOF;
+
+#
+# Created by zen do-vh.pl
+#
+
+<VirtualHost *:80>
+    ServerAdmin postmaster\@$_
+    DocumentRoot /var/www/$user_name/$_
+    DirectoryIndex index.php index.html index.htm
+    ErrorLog /var/www/$user_name/apache-log/$_.error.log
+    CustomLog /var/www/$user_name/apache-log/$_.access.log common
+    AddType application/x-httpd-php .php .php3 .php4 .php5 .phtml
+    AddType application/x-httpd-php-source .phps
+</VirtualHost>
+EOF
+
+		close(VH);
+
 	
-	`touch /var/www/$user_name/apache-log/$vh_name.error.log`;
-	`touch /var/www/$user_name/apache-log/$vh_name.access.log`;
+		`touch /var/www/$user_name/apache-log/$_.error.log`;
+		`touch /var/www/$user_name/apache-log/$_.access.log`;
+	}
+
+	close DOMAINS;
 }
 
 return1;
-
 
 END { }

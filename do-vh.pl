@@ -6,9 +6,9 @@ use strict;
 use vh;   # only for apache/http
 #use isp; # for isp manager
 
-my ($user_name, $vh_name, $whoami);
+my ($user_name, $file,$whoami);
 
-if ( chomp($whoami = `whoami`) ne "root" ) {
+if ( $ENV{'USER'} ne "root" ) {
 	print "Only root can run me.\n";
 	exit;
 }
@@ -21,12 +21,15 @@ if (@ARGV > 2) {
 			exit;
 }
 
+if ( ! -e "/var/www" ) {
+	print "Directory /var/www does not exist. Exit.\n";
+	exit;
+}
+
 $user_name = $ARGV[0];
-$vh_name = $ARGV[1];
+$file = $ARGV[1];
 
 &chk_dir;
 
-print "User name = $user_name ; vh name = $vh_name\n";
-
-create_vh($user_name,$vh_name);
+create_vh($user_name,$file);
 
