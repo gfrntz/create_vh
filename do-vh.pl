@@ -6,7 +6,7 @@ use strict;
 use vh;   # only for apache/http
 #use isp; # for isp manager
 
-my ($user_name, $file,$whoami);
+my ($user_name, $file);
 
 if ( $ENV{'USER'} ne "root" ) {
 	print "Only root can run me.\n";
